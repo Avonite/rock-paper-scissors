@@ -6,6 +6,10 @@ game();
 function game() {
 	for(i = 0; i < 5; i++) {
 		let player = prompt("Choose rock, paper or scissors.").toLowerCase();
+		while (!checkUserInput(player)) {
+			alert("That was incorrect.");
+			player = prompt("Choose rock, paper or scissors.").toLowerCase();
+		}
 		let playerPC = computerPlayer();
 		console.log(getWinner(player, playerPC));
 		console.log("Score: You: " + playerScore + " - Computer: " + playerPCScore);
@@ -19,7 +23,7 @@ function computerPlayer() {
 }
 
 function getWinner(player, playerPC) {
-	if(player === playerPC) {
+	if (player === playerPC) {
 		return "It's a draw!";
 	} else if (player === "rock") {
 		if (playerPC === "paper") {
@@ -47,5 +51,17 @@ function getWinner(player, playerPC) {
 		}
 	} else {
 		return "something went wrong";
+	}
+}
+
+
+function checkUserInput(player){
+	switch (player) {
+		case "rock" :
+		case "paper" :
+		case "scissors":
+			return true;
+		default: 
+			return false;
 	}
 }
