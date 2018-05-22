@@ -3,22 +3,24 @@ let playerPCScore = 0;
 let playButtons = document.querySelectorAll('.playButtons');
 let resetButton = document.querySelector('#resetButton');
 
-addClickEventsPlayButtons();
+addEventResetButton();
+addEventsPlayButtons();
 
-resetButton.addEventListener('click', function() {
-	playerScore = 0;
-	playerPCScore = 0;
-	displayScores();
-});
-
-
-function addClickEventsPlayButtons() {
+function addEventsPlayButtons() {
 	for (let i = 0; playButtons.length; i++) {
 		playButtons[i].addEventListener('click', function() {
 			getWinner(playButtons[i].innerHTML, computerPlayer());
 			displayScores();
 		});
 	};
+}
+
+function addEventResetButton() {
+	resetButton.addEventListener('click', function() {
+		playerScore = 0;
+		playerPCScore = 0;
+		displayScores();
+	});
 }
 
 function displayScores() {
