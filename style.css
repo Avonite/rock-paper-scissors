@@ -1,6 +1,18 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #b0cad4bf;
+}
+
 .container {
 	display: flex;
 	flex-direction: column;
+    align-items: center;
+}
+
+.button {
+	flex: 1;
 }
 
 #scoreboard {

@@ -2,6 +2,7 @@ let playerScore = 0;
 let playerPCScore = 0;
 let playButtons = document.querySelectorAll('.playButtons');
 let resetButton = document.querySelector('#resetButton');
+let winnerDisplayText = document.querySelector('#winnerDisplayText');
 
 addEventResetButton();
 addEventsPlayButtons();
@@ -9,17 +10,46 @@ addEventsPlayButtons();
 function addEventsPlayButtons() {
 	for (let i = 0; playButtons.length; i++) {
 		playButtons[i].addEventListener('click', function() {
-			getWinner(playButtons[i].innerHTML, computerPlayer());
+			winnerDisplayText.textContent = 
+				getWinner(playButtons[i].innerHTML, computerPlayer());
 			displayScores();
+			if (playerScore === 5 || playerPCScore === 5) {
+				announceWinner();
+				disablePlayButtons();
+				return;
+			}
 		});
 	};
+}
+
+function disablePlayButtons() {
+	for (let i = 0; playButtons.length; i++) {
+		playButtons[i].disabled = true;
+	}
+}
+
+function enablePlayButtons() {
+	for (let i = 0; playButtons.length; i++) {
+		playButtons[i].disabled = false;
+	}
+}
+
+function announceWinner() {
+	if (playerScore > playerPCScore) {
+		winnerDisplayText.textContent = "You win!"
+	} else {
+		winnerDisplayText.textContent = "You lose!";
+	};
+
 }
 
 function addEventResetButton() {
 	resetButton.addEventListener('click', function() {
 		playerScore = 0;
 		playerPCScore = 0;
+		winnerDisplayText.textContent = "";
 		displayScores();
+		enablePlayButtons();		
 	});
 }
 
@@ -40,61 +70,28 @@ function getWinner(player, playerPC) {
 	} else if (player === "rock") {
 		if (playerPC === "paper") {
 			playerPCScore++;
-			return "Computer wins.";
+			return "Paper beats rock.";
 		} else {
 			playerScore++;
-			return "You win!";
+			return "Rock beats scissors.";
 		}
 	} else if (player === "paper") {
 		if (playerPC === "scissors") {
 			playerPCScore++;
-			return "Computer wins.";
+			return "Scissors beat paper.";
 		} else {
 			playerScore++;
-			return "You win!";
+			return "Paper beats rock.";
 		}
 	} else if (player === "scissors") {
 		if (playerPC === "rock") {
 			playerPCScore++;
-			return "Computer wins.";
+			return "Rock beats scissors.";
 		} else {
 			playerScore++;
-			return "You win!";
+			return "Scissors beat paper.";
 		}
 	} else {
 		return "something went wrong";
 	}
 }
-
-
-// function checkUserInput(player){
-// 	switch (player) {
-// 		case "rock" :
-// 		case "paper" :
-// 		case "scissors":
-// 			return true;
-// 		default: 
-// 			return false;
-// 	}
-// }
-
-
-// function playRound(e) {
-// 	let scoreDisplay = document.querySelector('#playerScore');
-// 	scoreDisplay.textContent("test");
-// }
-
-// game();
-
-// function game() {
-// 	for(i = 0; i < 5; i++) {
-// 		let player = prompt("Choose rock, paper or scissors.").toLowerCase();
-// 		while (!checkUserInput(player)) {
-// 			alert("That was incorrect.");
-// 			player = prompt("Choose rock, paper or scissors.").toLowerCase();
-// 		}
-// 		let playerPC = computerPlayer();
-// 		console.log(getWinner(player, playerPC));
-// 		console.log("Score: You: " + playerScore + " - Computer: " + playerPCScore);
-// 	}
-// }
